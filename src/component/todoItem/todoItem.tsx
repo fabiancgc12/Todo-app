@@ -11,9 +11,9 @@ export function TodoItem({todo}:props){
     <div>
         <h3>{todo.title}</h3>
         <p>{todo.description}</p>
-        <span>{dateFormat(todo.date)}</span>
-        <span>{timeFormat(todo.date)}</span>
-        <span>{todo.status}</span>
+        {todo?.date && <span data-testid="date">{dateFormat(todo.date)}</span>}
+        {todo?.date && <span data-testid="time">{timeFormat(todo.date)}</span>}
+        <button className={`status ${todo.status}`}>{todo.status}</button>
     </div>
     )
 }
