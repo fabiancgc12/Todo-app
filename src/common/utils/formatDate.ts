@@ -1,5 +1,5 @@
 const dateFormatter = new Intl.DateTimeFormat("en-US",{
-    dateStyle: "short"
+    dateStyle: "medium"
 })
 
 export function dateFormat(date:Date){

@@ -1,5 +1,5 @@
 export enum TodoStatus{
     Completed= "completed",
-    UnCompleted = "uncompleted",
+    unCompleted = "uncompleted",
     Pending = "pending"
 }

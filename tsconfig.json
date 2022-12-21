@@ -23,7 +23,8 @@
   },
   "include": [
     "src",
-    "./jest-setup.ts"
+    "./jest-setup.ts",
+    "node_modules/vitest"
   ],
   "references": [{ "path": "./tsconfig.node.json" }]
 }
