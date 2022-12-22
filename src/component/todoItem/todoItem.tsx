@@ -1,7 +1,7 @@
 import {TodoModel} from "@/common/models/Todo.model";
 import {dateFormat} from "@/common/utils/formatDate";
 import {timeFormat} from "@/common/utils/formatTime";
-import {Button, Flex, Title, Container, Text, Center, ActionIcon} from "@mantine/core";
+import {Button, Flex, Title, Container, Text, Center, ActionIcon, createStyles, Box} from "@mantine/core";
 import React, {ReactNode} from "react";
 import {
     AiOutlineFieldTime,
@@ -29,7 +29,21 @@ const buttonColors:Record<TodoStatus,string> = {
     [TodoStatus.unCompleted]:"gray.6"
 }
 
+
+const useStyles = createStyles((theme, _params, getRef) => ({
+    tittle:{
+        overflow:"hidden",
+        whiteSpace:"nowrap",
+        textOverflow:"ellipsis"
+    },
+    wrapper:{
+        borderBottom:`1px solid ${theme.colors.gray[6]}`
+    }
+}))
+
+
 export function TodoItem({todo,changeStatus}:props){
+    const {classes} = useStyles()
     return (
         <Flex
             mih={50}
@@ -37,16 +51,13 @@ export function TodoItem({todo,changeStatus}:props){
             justify="space-around"
             align="center"
             direction="row"
-            px={"xl"}
             py={"md"}
+            px={"lg"}
+            data-testid={"todoItem"}
+            className={classes.wrapper}
         >
-            <Container w={"85%"}>
-                <Title order={3} fz="md" tt="capitalize"
-                       sx={{
-                           overflow:"hidden",
-                           whiteSpace:"nowrap",
-                           textOverflow:"ellipsis"
-                }}>{todo.title}</Title>
+            <Box w={"85%"}>
+                <Title order={3} fz="md" tt="capitalize" className={classes.tittle}>{todo.title}</Title>
                 {todo?.date &&
                 <Flex gap={20}>
                     <Center inline>
@@ -57,7 +68,7 @@ export function TodoItem({todo,changeStatus}:props){
                     </Center>
                 </Flex>
                     }
-            </Container>
+            </Box>
             <ActionIcon
                 data-testid="status"
                 onClick={changeStatus}
