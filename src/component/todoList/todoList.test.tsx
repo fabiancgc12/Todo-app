@@ -1,5 +1,5 @@
 import React from "react";
-import {cleanup, render, screen} from "@testing-library/react";
+import {cleanup, render} from "@testing-library/react";
 import {TodoList} from "./todoList";
 import '@testing-library/jest-dom/'
 import {TodoModel} from "@/common/models/Todo.model";
@@ -31,6 +31,7 @@ describe("todoList", () => {
 
     it(`should render ${testTodos.length} items`, () => {
         const {container} = render(<TodoList/>)
-        expect(container.childElementCount).toBe(testTodos.length)
+        const items = container.firstChild?.childNodes
+        expect(items?.length).toBe(testTodos.length)
     })
 })
