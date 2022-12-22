@@ -12,7 +12,7 @@ const todo = {
 
 function App() {
   const [todo, setTodo] = useState({
-      title:"this is a title",
+      title:"this is a titlenecfklnwelcf nweb cfvkbwriob viobw vioeobvo ie bvioeiveibiorv",
       description:"testeando todo",
       date: new Date(2022,11,19,4,50),
       status:TodoStatus.Completed

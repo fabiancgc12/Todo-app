@@ -41,7 +41,12 @@ export function TodoItem({todo,changeStatus}:props){
             py={"md"}
         >
             <Container w={"85%"}>
-                <Title order={3} fz="md" tt="capitalize">{todo.title}</Title>
+                <Title order={3} fz="md" tt="capitalize"
+                       sx={{
+                           overflow:"hidden",
+                           whiteSpace:"nowrap",
+                           textOverflow:"ellipsis"
+                }}>{todo.title}</Title>
                 {todo?.date &&
                 <Flex gap={20}>
                     <Center inline>
@@ -52,7 +57,6 @@ export function TodoItem({todo,changeStatus}:props){
                     </Center>
                 </Flex>
                     }
-                <Text c={"gray.8"}>{todo.description}</Text>
             </Container>
             <ActionIcon
                 data-testid="status"

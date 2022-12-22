@@ -36,9 +36,8 @@ describe("TodoItem", () => {
     })
 
     it('should render a todo description,date and time', function () {
-        const {container} = render(<TodoItem todo={todo} changeStatus={changeStatus}/>)
+        render(<TodoItem todo={todo} changeStatus={changeStatus}/>)
         screen.getByText(todo.title)
-        screen.getByText(todo.description)
         if (todo.date) {
             screen.getByText(dateFormat(todo.date))
             screen.getByText(timeFormat(todo.date))
