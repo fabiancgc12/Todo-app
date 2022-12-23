@@ -2,7 +2,7 @@ import React from 'react'
 import {BrowserRouter, Route, Routes} from "react-router-dom";
 import {HomePage} from "@/pages/homePage";
 import {CreatePage} from "@/pages/createPage";
-import {TodosProvider} from "./global/todosContext/todosContext";
+import {TodosProvider} from "@/global/todosContext/todosContext";
 
 function App() {
     return (

@@ -17,9 +17,10 @@
     "jsx": "react-jsx",
     "baseUrl": "./src",
     "paths": {
-      "@/component/*": ["/component/*"],
-      "@/common/*": ["/common/*"],
-      "@/pages/*": ["/pages/*"]
+      "@/component/*": ["component/*"],
+      "@/common/*": ["common/*"],
+      "@/pages/*": ["pages/*"],
+      "@/global/*": ["global/*"]
     }
   },
   "include": [
