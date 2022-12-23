@@ -13,7 +13,7 @@ export function TodoForm({action}:props){
     const [date, setDate] = useState(new Date());
     const [title, setTitle] = useState("");
     const [description, setDescription] = useState("");
-    const onSubmit = (e) => {
+    const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         const createdTodo:TodoModel = {
             title,
