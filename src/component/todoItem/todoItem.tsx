@@ -1,8 +1,8 @@
 import {TodoModel} from "@/common/models/Todo.model";
 import {dateFormat} from "@/common/utils/formatDate";
 import {timeFormat} from "@/common/utils/formatTime";
-import {Button, Flex, Title, Container, Text, Center, ActionIcon, createStyles, Box} from "@mantine/core";
-import React, {ReactNode} from "react";
+import {Flex, Title, Text, Center, ActionIcon, createStyles, Box} from "@mantine/core";
+import React, {memo, ReactNode} from "react";
 import {
     AiOutlineFieldTime,
     BsFillCalendarWeekFill,
@@ -30,7 +30,7 @@ const buttonColors:Record<TodoStatus,string> = {
 }
 
 
-const useStyles = createStyles((theme, _params, getRef) => ({
+const useStyles = createStyles((theme, _params) => ({
     tittle:{
         overflow:"hidden",
         whiteSpace:"nowrap",
@@ -42,7 +42,8 @@ const useStyles = createStyles((theme, _params, getRef) => ({
 }))
 
 
-export function TodoItem({todo,changeStatus}:props){
+
+export const TodoItem = memo(({todo,changeStatus}:props) => {
     const {classes} = useStyles()
     return (
         <Flex
@@ -80,4 +81,4 @@ export function TodoItem({todo,changeStatus}:props){
             </ActionIcon>
         </Flex>
     )
-}
+})
