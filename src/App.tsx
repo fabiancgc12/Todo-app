@@ -1,10 +1,12 @@
 import React from 'react'
-import {TodoList} from "./component/todoList/todoList";
+import {TodoForm} from "./component/todoForm/todoForm";
 
 function App() {
     return (
     <div className="App">
-      <TodoList/>
+        <TodoForm action={(todo) => {
+        console.log(todo)}
+        }/>
     </div>
   )
 }
