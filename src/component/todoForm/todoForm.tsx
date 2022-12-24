@@ -13,10 +13,13 @@ export function TodoForm({action}:props){
     const [activateDates,setActivateDates] = useState(false);
     const [date, setDate] = useState(new Date());
     const [title, setTitle] = useState("");
+    const [titleError, setTitleError] = useState(false);
     const [description, setDescription] = useState("");
+    const [descriptionError, setDescriptionError] = useState(false);
     const navigate = useNavigate();
     const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
+        if (!validate()) return
         const createdTodo:TodoModel = {
             title,
             description,
@@ -27,6 +30,23 @@ export function TodoForm({action}:props){
         action(createdTodo)
     }
 
+    const validate = () => {
+        if (!title){
+            setTitleError(true)
+            return false
+        }
+        else
+            setTitleError(false)
+
+        if (!description){
+            setDescriptionError(true)
+            return false
+        }
+        else
+            setDescriptionError(false)
+        return true
+    }
+
     return (
         <Container>
             <form onSubmit={onSubmit}>
@@ -35,6 +55,7 @@ export function TodoForm({action}:props){
                     label="Title"
                     onChange={(event) => setTitle(event.currentTarget.value)}
                     value={title}
+                    error={titleError}
                     withAsterisk
                 />
                 <TextInput
@@ -42,6 +63,7 @@ export function TodoForm({action}:props){
                     label="Description"
                     onChange={(event) => setDescription(event.currentTarget.value)}
                     value={description}
+                    error={descriptionError}
                     withAsterisk
                 />
                 <Checkbox
@@ -76,7 +98,7 @@ export function TodoForm({action}:props){
                     }}
                     disabled={!activateDates}
                 />
-                <Flex mt={10}justify={"space-between"} align={"center"}>
+                <Flex mt={10} justify={"space-between"} align={"center"}>
                     <Button color="orange" onClick={() => navigate(-1)}>Go Back</Button>
                     <Button type={"submit"}>Create</Button>
                 </Flex>
