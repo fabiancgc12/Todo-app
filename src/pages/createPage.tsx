@@ -5,8 +5,12 @@ import {useTodosContext} from "@/global/todosContext/todosContext";
 export function CreatePage(){
     const [,setTodos] = useTodosContext()
     return (
-        <TodoForm action={(todo) => {
-            setTodos(todos => [...todos,todo])
-        }}/>
+        <>
+            <TodoForm action={(todo) => {
+                setTodos(todos => [todo,...todos])
+                navigate(-1)
+            }}/>
+        </>
+
     )
 }
