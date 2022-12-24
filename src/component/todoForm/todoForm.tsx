@@ -4,13 +4,24 @@ import {DatePicker, TimeInput} from "@mantine/dates";
 import {TodoModel} from "@/common/models/Todo.model";
 import {useNavigate} from "react-router-dom";
 
-type props = {
-    action:(todo:TodoModel) => void,
-    submitLabel:string,
-    defaultValue?:Partial<TodoModel>
+type propsOnEdit = {
+    editMode:true,
+    deleteAction: () => void
 }
 
-export function TodoForm({action,submitLabel,defaultValue = {}}:props){
+type propsCreate = {
+    editMode?:false,
+    deleteAction?: never
+}
+
+type props = {
+    action:(todo:TodoModel) => void,
+    defaultValue?:Partial<TodoModel>
+} & (propsOnEdit | propsCreate)
+
+
+
+export function TodoForm({action,editMode,deleteAction,defaultValue = {}}:props){
     const [activateDates,setActivateDates] = useState(!!defaultValue?.date);
     const [date, setDate] = useState( defaultValue?.date || new Date());
     const titleRef = useRef<HTMLInputElement>(null);
@@ -98,7 +109,8 @@ export function TodoForm({action,submitLabel,defaultValue = {}}:props){
                 />
                 <Flex mt={10} justify={"space-between"} align={"center"}>
                     <Button color="orange" onClick={() => navigate(-1)}>Go Back</Button>
-                    <Button color="green" type={"submit"}>{submitLabel}</Button>
+                    <Button color="green" type={"submit"}>{editMode ? "Update" : "Create"}</Button>
+                    {editMode && <Button color={"red"} onClick={deleteAction}>Delete</Button>}
                 </Flex>
             </form>
         </Container>

@@ -14,7 +14,7 @@ export function CreatePage(){
                     navigate(-1)
                     }
                 }
-                submitLabel="Create"
+                editMode={false}
             />
         </>
 

@@ -25,7 +25,11 @@ export function EditPage(){
                 }
             }
             defaultValue={todo}
-            submitLabel={"Update"}
+            editMode={true}
+            deleteAction={() => {
+                setTodo(todos => todos.filter(t => t.id !== id))
+                navigate(-1)
+            }}
         />
     )
 }
