@@ -1,35 +1,19 @@
 import {TodoModel} from "@/common/models/Todo.model";
 import {dateFormat} from "@/common/utils/formatDate";
 import {timeFormat} from "@/common/utils/formatTime";
-import {Flex, Title, Text, Center, ActionIcon, createStyles, Box} from "@mantine/core";
-import React, {memo, ReactNode} from "react";
+import {Flex, Title, Text, Center, createStyles, Box} from "@mantine/core";
+import React, {memo} from "react";
 import {
     AiOutlineFieldTime,
     BsFillCalendarWeekFill,
-    FaRegCheckCircle,
-    FaRegCircle,
-    FaRegDotCircle
 } from "react-icons/all";
-import {TodoStatus} from "@/common/enums/TodoStatus";
 import {useNavigate} from "react-router-dom";
+import {StatusIcon} from "@/component/todoItem/StatusIcon";
 
 type props = {
     todo:TodoModel,
     changeStatus: () => void
 }
-
-export const buttonIcons:Record<TodoStatus,ReactNode> = {
-    [TodoStatus.Completed]:<FaRegCheckCircle size={32}/>,
-    [TodoStatus.Pending]:<FaRegDotCircle size={32}/>,
-    [TodoStatus.unCompleted]:<FaRegCircle size={32}/>
-}
-
-export const buttonColors:Record<TodoStatus,string> = {
-    [TodoStatus.Completed]:"green.8",
-    [TodoStatus.Pending]:"orange.6",
-    [TodoStatus.unCompleted]:"gray.6"
-}
-
 
 const useStyles = createStyles((theme, _params) => ({
     tittle:{
@@ -75,15 +59,7 @@ export const TodoItem = memo(({todo,changeStatus}:props) => {
                 </Flex>
                     }
             </Box>
-            <ActionIcon
-                data-testid="status"
-                onClick={changeStatus}
-                variant="transparent"
-                color={buttonColors[todo.status]}
-                size={"lg"}
-                className={`status ${todo.status}`}>
-                {buttonIcons[todo.status]}
-            </ActionIcon>
+            <StatusIcon status={todo.status} onClick={changeStatus}/>
         </Flex>
     )
 })

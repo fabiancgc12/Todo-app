@@ -1,10 +1,10 @@
 import React, {useRef, useState} from "react";
-import {ActionIcon, Button, Checkbox, Container, Flex, TextInput} from "@mantine/core";
+import {Button, Checkbox, Container, Flex, TextInput} from "@mantine/core";
 import {DatePicker, TimeInput} from "@mantine/dates";
 import {TodoModel} from "@/common/models/Todo.model";
 import {useNavigate} from "react-router-dom";
 import {TodoStatus} from "@/common/enums/TodoStatus";
-import {buttonColors, buttonIcons} from "../todoItem/todoItem";
+import {StatusIcon} from "@/component/todoItem/StatusIcon";
 
 type propsOnEdit = {
     editMode:true,
@@ -69,15 +69,7 @@ export function TodoForm({action,editMode,deleteAction,defaultValue = {}}:props)
         <Container>
             <form onSubmit={onSubmit}>
                 <Flex align={"center"} gap={15}>
-                    <ActionIcon
-                        data-testid="status"
-                        onClick={changeStatus}
-                        variant="transparent"
-                        color={buttonColors[status]}
-                        size={"lg"}
-                        className={`status ${status}`}>
-                        {buttonIcons[status]}
-                    </ActionIcon>
+                    <StatusIcon status={status} onClick={changeStatus}/>
                     <TextInput
                         placeholder={"Todo title"}
                         w={"100%"}
