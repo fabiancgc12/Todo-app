@@ -1,13 +1,18 @@
 import {TodoForm} from "@/component/todoForm/todoForm";
 import {useTodosContext} from "@/global/todosContext/todosContext";
 import {useNavigate, useParams} from "react-router-dom";
-import {TodoModel} from "@/common/models/Todo.model";
+import {useEffect} from "react";
 
 export function EditPage(){
     const [todos,setTodo] = useTodosContext()
     const { id } = useParams();
     const navigate = useNavigate()
-    const todo = todos.find(t => t.id === id) as TodoModel
+    const todo = todos.find(t => t.id === id)
+    // if there is no to-do to be found redirect to home
+    useEffect(() => {
+        if (!todo)
+            navigate("/")
+    },[todo])
     return (
         <TodoForm
             action={updatedTodo => {
