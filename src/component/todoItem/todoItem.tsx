@@ -11,6 +11,7 @@ import {
     FaRegDotCircle
 } from "react-icons/all";
 import {TodoStatus} from "@/common/enums/TodoStatus";
+import {useNavigate} from "react-router-dom";
 
 type props = {
     todo:TodoModel,
@@ -38,13 +39,17 @@ const useStyles = createStyles((theme, _params) => ({
     },
     wrapper:{
         borderBottom:`1px solid ${theme.colors.gray[6]}`
+    },
+    info:{
+        cursor:"pointer"
     }
 }))
 
 
 
 export const TodoItem = memo(({todo,changeStatus}:props) => {
-    const {classes} = useStyles()
+    const {classes} = useStyles();
+    const navigate = useNavigate()
     return (
         <Flex
             mih={50}
@@ -57,7 +62,7 @@ export const TodoItem = memo(({todo,changeStatus}:props) => {
             data-testid={"todoItem"}
             className={classes.wrapper}
         >
-            <Box w={"85%"}>
+            <Box w={"85%"} className={classes.info} onClick={() => navigate(`update/${todo.id}`)}>
                 <Title order={3} fz="md" tt="capitalize" className={classes.tittle}>{todo.title}</Title>
                 {todo?.date &&
                 <Flex gap={20}>

@@ -5,10 +5,11 @@ import {TodoModel} from "@/common/models/Todo.model";
 import {useNavigate} from "react-router-dom";
 
 type props = {
-    action:(todo:TodoModel) => void
+    action:(todo:TodoModel) => void,
+    submitLabel:string
 }
 
-export function TodoForm({action}:props){
+export function TodoForm({action,submitLabel}:props){
     const [activateDates,setActivateDates] = useState(false);
     const [date, setDate] = useState(new Date());
     // const [title, setTitle] = useState("");
@@ -96,7 +97,7 @@ export function TodoForm({action}:props){
                 />
                 <Flex mt={10} justify={"space-between"} align={"center"}>
                     <Button color="orange" onClick={() => navigate(-1)}>Go Back</Button>
-                    <Button color="green" type={"submit"}>Create</Button>
+                    <Button color="green" type={"submit"}>{submitLabel}</Button>
                 </Flex>
             </form>
         </Container>

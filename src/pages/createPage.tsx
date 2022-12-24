@@ -8,10 +8,14 @@ export function CreatePage(){
     const [,setTodos] = useTodosContext()
     return (
         <>
-            <TodoForm action={(todo) => {
-                setTodos(todos => [todo,...todos])
-                navigate(-1)
-            }}/>
+            <TodoForm
+                action={(todo) => {
+                    setTodos(todos => [todo,...todos])
+                    navigate(-1)
+                    }
+                }
+                submitLabel="Create"
+            />
         </>
 
     )
