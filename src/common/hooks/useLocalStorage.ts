@@ -17,9 +17,16 @@ type definition<T> = {
 export function useLocalStorage<T>({key, defaultValue,deserialize}:definition<T>):[T,Dispatch<SetStateAction<T>>]{
     const [value,setter] = useState(() => getStorageValue(key,defaultValue,deserialize))
     const setValue:Dispatch<SetStateAction<T>> = useCallback(
-        (newVal:SetStateAction<T>) => {
-            localStorage.setItem(key,JSON.stringify(newVal))
-            setter(newVal)
+        (newState:SetStateAction<T>) => {
+            setter(prevVal => {
+                let newVal:T;
+                if (newState instanceof Function)
+                    newVal = newState(prevVal)
+                else
+                    newVal = newState
+                localStorage.setItem(key,JSON.stringify(newVal))
+                return newVal
+            })
         },
         [key,setter],
     );
