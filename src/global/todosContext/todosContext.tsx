@@ -13,15 +13,25 @@ type props = {
 
 const testTodos:TodoModel[] = []
 
-for (let i = 0; i < 4; i++) {
+for (let i = 0; i < 15; i++) {
+    let date:Date| undefined = new Date()
     let status = TodoStatus.Completed
-    if (i % 2) status = TodoStatus.Pending
-    else if (i % 3) status = TodoStatus.unCompleted
+    if (i % 2 == 0) {
+        status = TodoStatus.Pending
+        date.setDate(date.getDate() + 1)
+    }
+    else if (i % 3 == 0) {
+        status = TodoStatus.unCompleted
+        date.setDate(date.getDate() + 2)
+    } else if (i % 5 == 0) {
+        status = TodoStatus.unCompleted
+        date = undefined
+    }
     testTodos.push({
         id:crypto.randomUUID(),
         title:`this is a test ${i} titlenecfklnwelcf nweb cfvkbwriob viobw vioeobvo ie bvioeiveibiorv`,
         description:"testeando todo" + i,
-        date: new Date(2022,11,19,4,50),
+        date,
         status
     },);
 }
