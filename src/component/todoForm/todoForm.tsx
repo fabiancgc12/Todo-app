@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, {useRef, useState} from "react";
 import {Button, Checkbox, Container, Flex, TextInput} from "@mantine/core";
 import {DatePicker, TimeInput} from "@mantine/dates";
 import {TodoModel} from "@/common/models/Todo.model";
@@ -12,17 +12,21 @@ type props = {
 export function TodoForm({action}:props){
     const [activateDates,setActivateDates] = useState(false);
     const [date, setDate] = useState(new Date());
-    const [title, setTitle] = useState("");
+    // const [title, setTitle] = useState("");
+    const titleRef = useRef<HTMLInputElement>(null);
     const [titleError, setTitleError] = useState(false);
-    const [description, setDescription] = useState("");
+    // const [description, setDescription] = useState("");
+    const descriptionRef = useRef<HTMLInputElement>(null);
     const [descriptionError, setDescriptionError] = useState(false);
     const navigate = useNavigate();
     const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         if (!validate()) return
         const createdTodo:TodoModel = {
-            title,
-            description,
+            // @ts-ignore
+            title:titleRef.current.value,
+            // @ts-ignore
+            description:descriptionRef.current.value,
             status:TodoStatus.unCompleted
         }
         if (activateDates)
@@ -31,14 +35,14 @@ export function TodoForm({action}:props){
     }
 
     const validate = () => {
-        if (!title){
+        if (!titleRef.current?.value){
             setTitleError(true)
             return false
         }
         else
             setTitleError(false)
 
-        if (!description){
+        if (!descriptionRef.current?.value){
             setDescriptionError(true)
             return false
         }
@@ -53,22 +57,21 @@ export function TodoForm({action}:props){
                 <TextInput
                     placeholder={"Todo title"}
                     label="Title"
-                    onChange={(event) => setTitle(event.currentTarget.value)}
-                    value={title}
+                    ref={titleRef}
                     error={titleError}
                     withAsterisk
                 />
                 <TextInput
                     placeholder={"Todo description"}
                     label="Description"
-                    onChange={(event) => setDescription(event.currentTarget.value)}
-                    value={description}
+                    ref={descriptionRef}
                     error={descriptionError}
                     withAsterisk
                 />
                 <Checkbox
                     data-testid={"shouldHaveDates"}
                     label="Set date"
+                    mt={10}
                     checked={activateDates}
                     onChange={(event) => setActivateDates(event.currentTarget.checked)}
                 />
@@ -100,7 +103,7 @@ export function TodoForm({action}:props){
                 />
                 <Flex mt={10} justify={"space-between"} align={"center"}>
                     <Button color="orange" onClick={() => navigate(-1)}>Go Back</Button>
-                    <Button type={"submit"}>Create</Button>
+                    <Button color="green" type={"submit"}>Create</Button>
                 </Flex>
             </form>
         </Container>
