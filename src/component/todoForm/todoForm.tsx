@@ -1,5 +1,5 @@
 import React, {useRef, useState} from "react";
-import {Button, Checkbox, Container, Flex, TextInput} from "@mantine/core";
+import {Button, Checkbox, Container, Flex, Textarea, TextInput} from "@mantine/core";
 import {DatePicker, TimeInput} from "@mantine/dates";
 import {TodoModel} from "@/common/models/Todo.model";
 import {useNavigate} from "react-router-dom";
@@ -26,7 +26,7 @@ export function TodoForm({action,editMode,deleteAction,defaultValue = {}}:props)
     const [date, setDate] = useState( defaultValue?.date || new Date());
     const titleRef = useRef<HTMLInputElement>(null);
     const [titleError, setTitleError] = useState(false);
-    const descriptionRef = useRef<HTMLInputElement>(null);
+    const descriptionRef = useRef<HTMLTextAreaElement>(null);
     const [descriptionError, setDescriptionError] = useState(false);
     const [status, setStatus] = useState(defaultValue?.status || TodoStatus.unCompleted);
     const navigate = useNavigate();
@@ -80,7 +80,7 @@ export function TodoForm({action,editMode,deleteAction,defaultValue = {}}:props)
                         withAsterisk
                     />
                 </Flex>
-                <TextInput
+                <Textarea
                     placeholder={"Todo description"}
                     label="Description"
                     ref={descriptionRef}
