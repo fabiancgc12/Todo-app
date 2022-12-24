@@ -1,14 +1,15 @@
 import {TodoList} from "@/component/todoList/todoList";
 import React from "react";
 import {Button, Flex} from "@mantine/core";
-import {Link} from "react-router-dom";
+import {useNavigate} from "react-router-dom";
 
 export function HomePage(){
+    const navigate = useNavigate();
     return (
         <div>
             <Flex px={"sm"}>
-                <Button ml={"auto"} variant="outline">
-                    <Link style={{textDecoration:"none"}} to={"/create"} >create</Link>
+                <Button ml={"auto"} variant="outline" onClick={() => navigate("/create")}>
+                    Create
                 </Button>
             </Flex>
             <TodoList/>
