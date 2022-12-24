@@ -9,7 +9,7 @@ export function TodoList(){
     return (
         <Flex direction="column" px={"sm"}>
             {todos.map((t,index) => <TodoItem
-                key={`todo-${t.title}`}
+                key={`todo-${index}-${t.title}`}
                 todo={t}
                 changeStatus={() => {
                     const newTodos = [...todos]
