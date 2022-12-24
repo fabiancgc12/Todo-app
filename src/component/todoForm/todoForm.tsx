@@ -1,8 +1,9 @@
 import React, {useState} from "react";
-import {Button, Checkbox, Container, TextInput} from "@mantine/core";
+import {Button, Checkbox, Container, Flex, TextInput} from "@mantine/core";
 import {DatePicker, TimeInput} from "@mantine/dates";
 import {TodoModel} from "@/common/models/Todo.model";
 import {TodoStatus} from "@/common/enums/TodoStatus";
+import {useNavigate} from "react-router-dom";
 
 type props = {
     action:(todo:TodoModel) => void
@@ -13,6 +14,7 @@ export function TodoForm({action}:props){
     const [date, setDate] = useState(new Date());
     const [title, setTitle] = useState("");
     const [description, setDescription] = useState("");
+    const navigate = useNavigate();
     const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         const createdTodo:TodoModel = {
@@ -74,7 +76,10 @@ export function TodoForm({action}:props){
                     }}
                     disabled={!activateDates}
                 />
-                <Button type={"submit"}>Create</Button>
+                <Flex mt={10}justify={"space-between"} align={"center"}>
+                    <Button color="orange" onClick={() => navigate(-1)}>Go Back</Button>
+                    <Button type={"submit"}>Create</Button>
+                </Flex>
             </form>
         </Container>
     )
