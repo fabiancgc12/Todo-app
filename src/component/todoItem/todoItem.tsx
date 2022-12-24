@@ -18,13 +18,13 @@ type props = {
     changeStatus: () => void
 }
 
-const buttonIcons:Record<TodoStatus,ReactNode> = {
+export const buttonIcons:Record<TodoStatus,ReactNode> = {
     [TodoStatus.Completed]:<FaRegCheckCircle size={32}/>,
     [TodoStatus.Pending]:<FaRegDotCircle size={32}/>,
     [TodoStatus.unCompleted]:<FaRegCircle size={32}/>
 }
 
-const buttonColors:Record<TodoStatus,string> = {
+export const buttonColors:Record<TodoStatus,string> = {
     [TodoStatus.Completed]:"green.8",
     [TodoStatus.Pending]:"orange.6",
     [TodoStatus.unCompleted]:"gray.6"

@@ -1,8 +1,10 @@
 import React, {useRef, useState} from "react";
-import {Button, Checkbox, Container, Flex, TextInput} from "@mantine/core";
+import {ActionIcon, Button, Checkbox, Container, Flex, TextInput} from "@mantine/core";
 import {DatePicker, TimeInput} from "@mantine/dates";
 import {TodoModel} from "@/common/models/Todo.model";
 import {useNavigate} from "react-router-dom";
+import {TodoStatus} from "@/common/enums/TodoStatus";
+import {buttonColors, buttonIcons} from "../todoItem/todoItem";
 
 type propsOnEdit = {
     editMode:true,
@@ -19,8 +21,6 @@ type props = {
     defaultValue?:Partial<TodoModel>
 } & (propsOnEdit | propsCreate)
 
-
-
 export function TodoForm({action,editMode,deleteAction,defaultValue = {}}:props){
     const [activateDates,setActivateDates] = useState(!!defaultValue?.date);
     const [date, setDate] = useState( defaultValue?.date || new Date());
@@ -28,13 +28,14 @@ export function TodoForm({action,editMode,deleteAction,defaultValue = {}}:props)
     const [titleError, setTitleError] = useState(false);
     const descriptionRef = useRef<HTMLInputElement>(null);
     const [descriptionError, setDescriptionError] = useState(false);
+    const [status, setStatus] = useState(defaultValue?.status || TodoStatus.unCompleted);
     const navigate = useNavigate();
     const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         if (!validate()) return
         const todoDate = activateDates ? date : undefined
         // @ts-ignore
-        let createdTodo:TodoModel = new TodoModel(titleRef.current.value,descriptionRef.current.value,todoDate);
+        let createdTodo:TodoModel = new TodoModel(titleRef.current.value,descriptionRef.current.value,status,todoDate);
         action(createdTodo)
     }
 
@@ -55,17 +56,38 @@ export function TodoForm({action,editMode,deleteAction,defaultValue = {}}:props)
         return true
     }
 
+    const changeStatus = () => {
+        if (status == TodoStatus.Completed)
+            setStatus(TodoStatus.unCompleted)
+        else if (status == TodoStatus.unCompleted)
+            setStatus(TodoStatus.Pending)
+        else if (status == TodoStatus.Pending)
+            setStatus(TodoStatus.Completed)
+    }
+
     return (
         <Container>
             <form onSubmit={onSubmit}>
-                <TextInput
-                    placeholder={"Todo title"}
-                    label="Title"
-                    ref={titleRef}
-                    error={titleError}
-                    defaultValue={defaultValue?.title ? defaultValue.title : ""}
-                    withAsterisk
-                />
+                <Flex align={"center"} gap={15}>
+                    <ActionIcon
+                        data-testid="status"
+                        onClick={changeStatus}
+                        variant="transparent"
+                        color={buttonColors[status]}
+                        size={"lg"}
+                        className={`status ${status}`}>
+                        {buttonIcons[status]}
+                    </ActionIcon>
+                    <TextInput
+                        placeholder={"Todo title"}
+                        w={"100%"}
+                        label="Title"
+                        ref={titleRef}
+                        error={titleError}
+                        defaultValue={defaultValue?.title ? defaultValue.title : ""}
+                        withAsterisk
+                    />
+                </Flex>
                 <TextInput
                     placeholder={"Todo description"}
                     label="Description"

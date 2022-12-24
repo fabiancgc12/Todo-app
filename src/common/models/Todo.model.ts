@@ -7,12 +7,12 @@ export class TodoModel {
     date?:Date;
     status:TodoStatus
 
-    constructor(title:string,description:string,date?:Date) {
+    constructor(title:string,description:string,status:TodoStatus,date?:Date) {
         this.id = crypto.randomUUID();
         this.title = title;
         this.description = description;
         this.date = date;
-        this.status = TodoStatus.unCompleted;
+        this.status = status;
     }
 
 }
