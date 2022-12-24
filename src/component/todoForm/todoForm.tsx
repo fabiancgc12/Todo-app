@@ -6,16 +6,15 @@ import {useNavigate} from "react-router-dom";
 
 type props = {
     action:(todo:TodoModel) => void,
-    submitLabel:string
+    submitLabel:string,
+    defaultValue?:Partial<TodoModel>
 }
 
-export function TodoForm({action,submitLabel}:props){
-    const [activateDates,setActivateDates] = useState(false);
-    const [date, setDate] = useState(new Date());
-    // const [title, setTitle] = useState("");
+export function TodoForm({action,submitLabel,defaultValue = {}}:props){
+    const [activateDates,setActivateDates] = useState(!!defaultValue?.date);
+    const [date, setDate] = useState( defaultValue?.date || new Date());
     const titleRef = useRef<HTMLInputElement>(null);
     const [titleError, setTitleError] = useState(false);
-    // const [description, setDescription] = useState("");
     const descriptionRef = useRef<HTMLInputElement>(null);
     const [descriptionError, setDescriptionError] = useState(false);
     const navigate = useNavigate();
@@ -53,6 +52,7 @@ export function TodoForm({action,submitLabel}:props){
                     label="Title"
                     ref={titleRef}
                     error={titleError}
+                    defaultValue={defaultValue?.title ? defaultValue.title : ""}
                     withAsterisk
                 />
                 <TextInput
@@ -60,6 +60,7 @@ export function TodoForm({action,submitLabel}:props){
                     label="Description"
                     ref={descriptionRef}
                     error={descriptionError}
+                    defaultValue={defaultValue?.description ? defaultValue.description : ""}
                     withAsterisk
                 />
                 <Checkbox
@@ -102,5 +103,5 @@ export function TodoForm({action,submitLabel}:props){
             </form>
         </Container>
     )
-
 }
+
