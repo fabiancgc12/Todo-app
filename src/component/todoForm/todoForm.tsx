@@ -2,7 +2,6 @@ import React, {useRef, useState} from "react";
 import {Button, Checkbox, Container, Flex, TextInput} from "@mantine/core";
 import {DatePicker, TimeInput} from "@mantine/dates";
 import {TodoModel} from "@/common/models/Todo.model";
-import {TodoStatus} from "@/common/enums/TodoStatus";
 import {useNavigate} from "react-router-dom";
 
 type props = {
@@ -22,15 +21,9 @@ export function TodoForm({action}:props){
     const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         if (!validate()) return
-        const createdTodo:TodoModel = {
-            // @ts-ignore
-            title:titleRef.current.value,
-            // @ts-ignore
-            description:descriptionRef.current.value,
-            status:TodoStatus.unCompleted
-        }
-        if (activateDates)
-            createdTodo.date = date
+        const todoDate = activateDates ? date : undefined
+        // @ts-ignore
+        let createdTodo:TodoModel = new TodoModel(titleRef.current.value,descriptionRef.current.value,todoDate);
         action(createdTodo)
     }
 

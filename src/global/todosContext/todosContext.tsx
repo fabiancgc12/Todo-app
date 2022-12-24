@@ -18,6 +18,7 @@ for (let i = 0; i < 4; i++) {
     if (i % 2) status = TodoStatus.Pending
     else if (i % 3) status = TodoStatus.unCompleted
     testTodos.push({
+        id:crypto.randomUUID(),
         title:`this is a test ${i} titlenecfklnwelcf nweb cfvkbwriob viobw vioeobvo ie bvioeiveibiorv`,
         description:"testeando todo" + i,
         date: new Date(2022,11,19,4,50),
