@@ -14,7 +14,6 @@ export function CreatePage(){
                     navigate(-1)
                     }
                 }
-                editMode={false}
             />
         </>
 
