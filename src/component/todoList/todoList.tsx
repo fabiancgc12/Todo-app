@@ -1,12 +1,13 @@
 import React, {useState} from "react";
 import {TodoItem} from "../todoItem/todoItem";
 import {TodoStatus} from "@/common/enums/TodoStatus";
-import {Button, Flex, Title} from "@mantine/core";
+import {Button, Container, Flex, Title} from "@mantine/core";
 import {useTodosContext} from "@/global/todosContext/todosContext";
 import {TodoModel} from "@/common/models/Todo.model";
 import {useLocalStorage} from "@/common/hooks/useLocalStorage";
 import {sortTodos} from "@/common/utils/sortTodos";
 import {SearchInput} from "@/component/todoList/searchInput";
+import {TbMoodEmpty} from "react-icons/all";
 
 enum filterType{
     today,
@@ -76,6 +77,8 @@ type RenderProps = {
 }
 
 function RenderTodos({todos,setTodos}:RenderProps){
+    if (todos.length === 0)
+        return <Container><TbMoodEmpty/> Empty</Container>
     return (
         <div>
             {todos.map((t) => <TodoItem
