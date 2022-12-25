@@ -52,43 +52,9 @@ export function TodoList(){
                     color={filter === filterType.all ? "default" : "gray"}
                 >All</Button>
             </Button.Group>
-            <div>
-                {todosWithDates.map((t,index) => <TodoItem
-                    key={`todo-${t.id}`}
-                    todo={t}
-                    changeStatus={() => {
-                        const newTodos = [...todos]
-                        const newTodo = {...t}
-                        if (newTodo.status == TodoStatus.Completed)
-                            newTodo.status = TodoStatus.unCompleted
-                        else if (newTodo.status == TodoStatus.unCompleted)
-                            newTodo.status = TodoStatus.Pending
-                        else if (newTodo.status == TodoStatus.Pending)
-                            newTodo.status = TodoStatus.Completed
-                        newTodos.splice(index,1,newTodo)
-                        setTodos(newTodos)
-                    }}
-                />)}
-            </div>
+            <RenderTodos todos={todosWithDates} setTodos={setTodos}/>
             <Title>Without Date</Title>
-            <div>
-                {todosWithoutDate.map((t,index) => <TodoItem
-                    key={`todo-${t.id}`}
-                    todo={t}
-                    changeStatus={() => {
-                        const newTodos = [...todos]
-                        const newTodo = {...t}
-                        if (newTodo.status == TodoStatus.Completed)
-                            newTodo.status = TodoStatus.unCompleted
-                        else if (newTodo.status == TodoStatus.unCompleted)
-                            newTodo.status = TodoStatus.Pending
-                        else if (newTodo.status == TodoStatus.Pending)
-                            newTodo.status = TodoStatus.Completed
-                        newTodos.splice(index,1,newTodo)
-                        setTodos(newTodos)
-                    }}
-                />)}
-            </div>
+            <RenderTodos todos={todosWithoutDate} setTodos={setTodos}/>
         </Flex>
     )
 }
@@ -105,3 +71,33 @@ function isTomorrowDate(today:Date,date:Date){
     return date.toDateString() === tomorrow.toDateString()
 }
 
+type RenderProps = {
+    todos:TodoModel[],
+    setTodos:React.Dispatch<React.SetStateAction<TodoModel[]>>
+}
+
+function RenderTodos({todos,setTodos}:RenderProps){
+    return (
+        <div>
+            {todos.map((t) => <TodoItem
+                key={`todo-${t.id}`}
+                todo={t}
+                changeStatus={() => {
+                    setTodos(todos => {
+                        const newTodos = [...todos]
+                        const newTodo = {...t}
+                        const index = newTodos.findIndex(t => t.id === newTodo.id)
+                        if (newTodo.status == TodoStatus.Completed)
+                            newTodo.status = TodoStatus.unCompleted
+                        else if (newTodo.status == TodoStatus.unCompleted)
+                            newTodo.status = TodoStatus.Pending
+                        else if (newTodo.status == TodoStatus.Pending)
+                            newTodo.status = TodoStatus.Completed
+                        newTodos.splice(index,1,newTodo)
+                        return newTodos
+                    })
+                }}
+            />)}
+        </div>
+    )
+}
