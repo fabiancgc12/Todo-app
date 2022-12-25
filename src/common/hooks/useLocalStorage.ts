@@ -1,11 +1,11 @@
 import {Dispatch, SetStateAction, useCallback, useState} from "react";
 
 function getStorageValue<T>(key:string, defaultValue:T,deserialize?:(val:string) => T):T {
-    const saved = localStorage.getItem(key);
-    if (!saved) return defaultValue
+    const stored = localStorage.getItem(key);
+    if (!stored) return defaultValue
     if (deserialize)
-        return deserialize(saved)
-    return JSON.parse(saved);
+        return deserialize(stored)
+    return JSON.parse(stored);
 }
 
 type definition<T> = {
@@ -17,20 +17,14 @@ type definition<T> = {
 export function useLocalStorage<T>({key, defaultValue,deserialize}:definition<T>):[T,Dispatch<SetStateAction<T>>]{
     if (!key)
         throw Error("Key for localStorage not provided")
-    const [value,setter] = useState(() => getStorageValue(key,defaultValue,deserialize))
+    const [stored,setter] = useState(() => getStorageValue(key,defaultValue,deserialize))
     const setValue:Dispatch<SetStateAction<T>> = useCallback(
         (newState:SetStateAction<T>) => {
-            setter(prevVal => {
-                let newVal:T;
-                if (newState instanceof Function)
-                    newVal = newState(prevVal)
-                else
-                    newVal = newState
-                localStorage.setItem(key,JSON.stringify(newVal))
-                return newVal
-            })
+            const toStore = newState instanceof Function ? newState(stored) : newState;
+            localStorage.setItem(key,JSON.stringify(toStore));
+            setter(toStore)
         },
         [key,setter],
     );
-    return [value,setValue]
+    return [stored,setValue]
 }
