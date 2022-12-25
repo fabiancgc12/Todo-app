@@ -29,7 +29,6 @@ export function TodoList(){
         else
             todosWithoutDate.push(t)
     })
-    console.log(filter)
     return (
         <Flex direction="column" px={"sm"}>
             <Button.Group>
@@ -57,18 +56,6 @@ export function TodoList(){
             <RenderTodos todos={todosWithoutDate} setTodos={setTodos}/>
         </Flex>
     )
-}
-
-function isTodayDate(today:Date,date:Date){
-    return date.getFullYear() === today.getFullYear() &&
-        date.getMonth() === today.getMonth() &&
-        date.getDate() === today.getDate()
-}
-
-function isTomorrowDate(today:Date,date:Date){
-    const tomorrow = new Date(today.getTime())
-    tomorrow.setDate(tomorrow.getDate() + 1)
-    return date.toDateString() === tomorrow.toDateString()
 }
 
 type RenderProps = {
@@ -100,4 +87,16 @@ function RenderTodos({todos,setTodos}:RenderProps){
             />)}
         </div>
     )
+}
+
+function isTodayDate(today:Date,date:Date){
+    return date.getFullYear() === today.getFullYear() &&
+        date.getMonth() === today.getMonth() &&
+        date.getDate() === today.getDate()
+}
+
+function isTomorrowDate(today:Date,date:Date){
+    const tomorrow = new Date(today.getTime())
+    tomorrow.setDate(tomorrow.getDate() + 1)
+    return date.toDateString() === tomorrow.toDateString()
 }

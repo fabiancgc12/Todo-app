@@ -33,7 +33,12 @@ const useStyles = createStyles((theme, _params) => ({
 
 export const TodoItem = memo(({todo,changeStatus}:props) => {
     const {classes} = useStyles();
-    const navigate = useNavigate()
+    const navigate = useNavigate();
+    const today = new Date();
+    //checking if its expired
+    let dateColor = ""
+    if (todo?.date && today > todo.date)
+        dateColor = "red.7";
     return (
         <Flex
             mih={50}
@@ -51,10 +56,10 @@ export const TodoItem = memo(({todo,changeStatus}:props) => {
                 {todo?.date &&
                 <Flex gap={20}>
                     <Center inline>
-                        <BsFillCalendarWeekFill/>  <Text data-testid="date">  {dateFormat(todo.date)}</Text>
+                        <BsFillCalendarWeekFill/>  <Text data-testid="date" c={dateColor}>  {dateFormat(todo.date)}</Text>
                     </Center>
                     <Center inline>
-                        <AiOutlineFieldTime/>  <Text data-testid="time">  {timeFormat(todo.date)}</Text>
+                        <AiOutlineFieldTime/>  <Text data-testid="time" c={dateColor}>  {timeFormat(todo.date)}</Text>
                     </Center>
                 </Flex>
                     }
