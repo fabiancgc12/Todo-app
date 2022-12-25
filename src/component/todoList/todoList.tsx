@@ -20,7 +20,7 @@ export function TodoList(){
         key:"listFilter",
         defaultValue:filterType.today
     });
-    const [filterTitle, setFilterTitle] = useState("patatas");
+    const [filterTitle, setFilterTitle] = useState("");
     let todosWithDates:TodoModel[] = []
     const todosWithoutDate:TodoModel[] = [];
     const today = new Date();
