@@ -1,9 +1,10 @@
-import React, {useState} from "react";
+import React from "react";
 import {TodoItem} from "../todoItem/todoItem";
 import {TodoStatus} from "@/common/enums/TodoStatus";
 import {Button, Flex, Title} from "@mantine/core";
 import {useTodosContext} from "@/global/todosContext/todosContext";
 import {TodoModel} from "@/common/models/Todo.model";
+import {useLocalStorage} from "@/common/hooks/useLocalStorage";
 
 enum filterType{
     today,
@@ -13,7 +14,10 @@ enum filterType{
 
 export function TodoList(){
     const [todos,setTodos] = useTodosContext();
-    const [filter, setFilter] = useState(filterType.today);
+    const [filter, setFilter] = useLocalStorage({
+        key:"listFilter",
+        defaultValue:filterType.today
+    });
     const todosWithDates:TodoModel[] = []
     const todosWithoutDate:TodoModel[] = [];
     const today = new Date();

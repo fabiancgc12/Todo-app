@@ -15,6 +15,8 @@ type definition<T> = {
 }
 
 export function useLocalStorage<T>({key, defaultValue,deserialize}:definition<T>):[T,Dispatch<SetStateAction<T>>]{
+    if (!key)
+        throw Error("Key for localStorage not provided")
     const [value,setter] = useState(() => getStorageValue(key,defaultValue,deserialize))
     const setValue:Dispatch<SetStateAction<T>> = useCallback(
         (newState:SetStateAction<T>) => {
