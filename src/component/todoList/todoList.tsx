@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useState} from "react";
 import {TodoItem} from "../todoItem/todoItem";
 import {TodoStatus} from "@/common/enums/TodoStatus";
 import {Button, Flex, Title} from "@mantine/core";
@@ -6,6 +6,7 @@ import {useTodosContext} from "@/global/todosContext/todosContext";
 import {TodoModel} from "@/common/models/Todo.model";
 import {useLocalStorage} from "@/common/hooks/useLocalStorage";
 import {sortTodos} from "@/common/utils/sortTodos";
+import {SearchInput} from "@/component/todoList/searchInput";
 
 enum filterType{
     today,
@@ -19,26 +20,29 @@ export function TodoList(){
         key:"listFilter",
         defaultValue:filterType.today
     });
+    const [filterTitle, setFilterTitle] = useState("patatas");
     let todosWithDates:TodoModel[] = []
     const todosWithoutDate:TodoModel[] = [];
     const today = new Date();
     todos.forEach((t) => {
         if (t.date){
-            if (filter === filterType.today && isTodayDate(today,t.date))
+            if (filter === filterType.today && isTodayDate(today,t.date) && isTheTitleValid(t.title,filterTitle))
                 todosWithDates.push(t)
-            else if (filter === filterType.tomorrow && isTomorrowDate(today,t.date))
+            else if (filter === filterType.tomorrow && isTomorrowDate(today,t.date) && isTheTitleValid(t.title,filterTitle))
                 todosWithDates.push(t)
-            else if (filter === filterType.all)
+            else if (filter === filterType.all && isTheTitleValid(t.title,filterTitle))
                 todosWithDates.push(t)
         }
-        else
+        else if (isTheTitleValid(t.title,filterTitle))
             todosWithoutDate.push(t)
     })
     if (filter === filterType.all)
         todosWithDates = sortTodos(todosWithDates)
 
     return (
-        <Flex direction="column" px={"sm"}>
+        <Flex direction="column" px={"sm"} gap={10}>
+            <SearchInput defaultValue={filterTitle} cb={newTitleFilter => setFilterTitle(newTitleFilter)}/>
+            {filterTitle}
             <Button.Group>
                 <Button
                     onClick={() => {
@@ -107,4 +111,9 @@ function isTomorrowDate(today:Date,date:Date){
     const tomorrow = new Date(today.getTime())
     tomorrow.setDate(tomorrow.getDate() + 1)
     return date.toDateString() === tomorrow.toDateString()
+}
+
+function isTheTitleValid(title:string,filterTitle:string) {
+    if (filterTitle === "") return true
+    return title.includes(filterTitle)
 }
