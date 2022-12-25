@@ -11,7 +11,7 @@ type props = {
     children:ReactNode
 }
 
-const testTodos:TodoModel[] = []
+let testTodos:TodoModel[] = []
 
 for (let i = 0; i < 15; i++) {
     let date:Date| undefined = new Date()
@@ -36,6 +36,15 @@ for (let i = 0; i < 15; i++) {
         status
     },);
 }
+
+testTodos.push({
+    id:crypto.randomUUID(),
+    title:`this is a test 20 title`,
+    description:"testeando todo 20",
+    date: new Date(2023,12),
+    status:TodoStatus.Completed
+})
+
 export function TodosProvider({children}:props){
     const [todos,setTodos] = useLocalStorage({
         key:"todos",

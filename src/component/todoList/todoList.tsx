@@ -5,6 +5,7 @@ import {Button, Flex, Title} from "@mantine/core";
 import {useTodosContext} from "@/global/todosContext/todosContext";
 import {TodoModel} from "@/common/models/Todo.model";
 import {useLocalStorage} from "@/common/hooks/useLocalStorage";
+import {sortTodos} from "@/common/utils/sortTodos";
 
 enum filterType{
     today,
@@ -18,7 +19,7 @@ export function TodoList(){
         key:"listFilter",
         defaultValue:filterType.today
     });
-    const todosWithDates:TodoModel[] = []
+    let todosWithDates:TodoModel[] = []
     const todosWithoutDate:TodoModel[] = [];
     const today = new Date();
     todos.forEach((t) => {
@@ -33,6 +34,9 @@ export function TodoList(){
         else
             todosWithoutDate.push(t)
     })
+    if (filter === filterType.all)
+        todosWithDates = sortTodos(todosWithDates)
+
     return (
         <Flex direction="column" px={"sm"}>
             <Button.Group>
