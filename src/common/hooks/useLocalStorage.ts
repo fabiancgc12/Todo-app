@@ -18,9 +18,10 @@ export function useLocalStorage<T>({key, defaultValue,deserialize}:definition<T>
     if (!key)
         throw Error("Key for localStorage not provided")
     const [stored,setStored] = useState(() => getStorageValue(key,defaultValue,deserialize))
+    //using useCallback so the reference to the function is always the same
     const setValue:Dispatch<SetStateAction<T>> = useCallback(
         (newState:SetStateAction<T>) => {
-            //ew use the callback function to avoid bugs with race conditions
+            //we use the callback function to avoid bugs with race conditions
             setStored(prevVal => {
                 let toStore = newState instanceof Function ? newState(prevVal) : newState;
                 localStorage.setItem(key,JSON.stringify(toStore))
