@@ -22,8 +22,7 @@ export function MainTodo() {
                 align={"center"}
                 gap={10}
                 justify={"center"}
-                mih={100}
-                mah={175}
+                h={150}
                 p={20}
             >
                 <Title order={2}>Nothing to do today!</Title>
@@ -43,8 +42,7 @@ export function MainTodo() {
             align={"center"}
             gap={10}
             justify={"space-around"}
-            mih={100}
-            mah={175}
+            h={150}
             p={20}
         >
                 <Title order={2} align={"center"}>{message}</Title>
