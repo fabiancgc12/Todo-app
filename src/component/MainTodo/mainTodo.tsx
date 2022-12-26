@@ -23,7 +23,7 @@ export function MainTodo() {
                 gap={10}
                 justify={"center"}
                 mih={100}
-                mah={150}
+                mah={175}
                 p={20}
             >
                 <Title order={2}>Nothing to do today!</Title>
