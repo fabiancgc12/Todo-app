@@ -11,7 +11,7 @@ function App() {
     <div className="App">
         <MantineProvider theme={{ colorScheme: 'dark' }} withGlobalStyles>
             <TodosProvider>
-                <BrowserRouter>
+                <BrowserRouter basename={"/Todo-app/"}>
                     <Routes>
                         <Route path="/" element={ <HomePage/> } />
                         <Route path="/create" element={ <CreatePage/> } />
