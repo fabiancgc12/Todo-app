@@ -1,17 +1,26 @@
 import {TodoList} from "@/component/todoList/todoList";
 import React from "react";
-import {Button, Flex} from "@mantine/core";
+import {Box, Button} from "@mantine/core";
 import {useNavigate} from "react-router-dom";
+import {MainTodo} from "@/component/MainTodo/mainTodo";
 
 export function HomePage(){
     const navigate = useNavigate();
     return (
         <div>
-            <Flex px={"sm"}>
-                <Button ml={"auto"} variant="outline" onClick={() => navigate("/create")}>
+            <Box pos={"relative"}>
+                <MainTodo/>
+                <Button
+                    pos={"absolute"}
+                    bottom={-16}
+                    right={10}
+                    variant="white"
+                    color={"violet"}
+                    onClick={() => navigate("/create")}
+                >
                     Create
                 </Button>
-            </Flex>
+            </Box>
             <TodoList/>
         </div>
     )
