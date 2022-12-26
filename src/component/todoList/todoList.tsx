@@ -8,6 +8,7 @@ import {useLocalStorage} from "@/common/hooks/useLocalStorage";
 import {sortTodos} from "@/common/utils/sortTodos";
 import {SearchInput} from "@/component/todoList/searchInput";
 import {TbMoodEmpty} from "react-icons/all";
+import {isTodayDate} from "@/common/utils/isTodayDate";
 
 enum filterType{
     today,
@@ -41,7 +42,7 @@ export function TodoList(){
         todosWithDates = sortTodos(todosWithDates)
 
     return (
-        <Flex direction="column" px={"sm"} gap={10}>
+        <Flex direction="column" px={"sm"} gap={10} mt={10}>
             <SearchInput defaultValue={filterTitle} cb={newTitleFilter => setFilterTitle(newTitleFilter)}/>
             {filterTitle}
             <Button.Group>
@@ -102,12 +103,6 @@ function RenderTodos({todos,setTodos}:RenderProps){
             />)}
         </div>
     )
-}
-
-function isTodayDate(today:Date,date:Date){
-    return date.getFullYear() === today.getFullYear() &&
-        date.getMonth() === today.getMonth() &&
-        date.getDate() === today.getDate()
 }
 
 function isTomorrowDate(today:Date,date:Date){
