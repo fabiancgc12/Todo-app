@@ -66,7 +66,7 @@ export function TodoList(){
                 >All</Button>
             </Button.Group>
             <RenderTodos todos={todosWithDates} setTodos={setTodos}/>
-            <Title>Without Date</Title>
+            <Title order={2}>Without Date</Title>
             <RenderTodos todos={todosWithoutDate} setTodos={setTodos}/>
         </Flex>
     )
