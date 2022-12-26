@@ -1,6 +1,5 @@
 import {createContext, Dispatch, ReactNode, SetStateAction, useContext} from "react";
 import {TodoModel} from "@/common/models/Todo.model";
-import {TodoStatus} from "@/common/enums/TodoStatus";
 import {useLocalStorage} from "@/common/hooks/useLocalStorage";
 
 type contextType = [TodoModel[],Dispatch<SetStateAction<TodoModel[]>>];
@@ -11,44 +10,10 @@ type props = {
     children:ReactNode
 }
 
-let testTodos:TodoModel[] = []
-
-for (let i = 0; i < 15; i++) {
-    let date:Date| undefined = new Date()
-    let status = TodoStatus.Completed
-    if (i % 5 == 0) {
-        status = TodoStatus.unCompleted
-        date = undefined
-    }
-    else if (i % 2 == 0) {
-        status = TodoStatus.Pending
-        date.setDate(date.getDate() + 1)
-    }
-    else if (i % 3 == 0) {
-        status = TodoStatus.unCompleted
-        date.setDate(date.getDate() + 2)
-    }
-    testTodos.push({
-        id:crypto.randomUUID(),
-        title:`this is a test ${i} title`,
-        description:"testeando todo" + i,
-        date,
-        status
-    },);
-}
-
-testTodos.push({
-    id:crypto.randomUUID(),
-    title:`this is a test 20 title`,
-    description:"testeando todo 20",
-    date: new Date(2023,12),
-    status:TodoStatus.Completed
-})
-
 export function TodosProvider({children}:props){
     const [todos,setTodos] = useLocalStorage({
         key:"todos",
-        defaultValue:testTodos,
+        defaultValue:[] as TodoModel[],
         deserialize:(val) => {
             const saved:TodoModel[] = JSON.parse(val)
             return saved.map(t => ({
