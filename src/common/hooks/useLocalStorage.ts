@@ -17,14 +17,17 @@ type definition<T> = {
 export function useLocalStorage<T>({key, defaultValue,deserialize}:definition<T>):[T,Dispatch<SetStateAction<T>>]{
     if (!key)
         throw Error("Key for localStorage not provided")
-    const [stored,setter] = useState(() => getStorageValue(key,defaultValue,deserialize))
+    const [stored,setStored] = useState(() => getStorageValue(key,defaultValue,deserialize))
     const setValue:Dispatch<SetStateAction<T>> = useCallback(
         (newState:SetStateAction<T>) => {
-            const toStore = newState instanceof Function ? newState(stored) : newState;
-            localStorage.setItem(key,JSON.stringify(toStore));
-            setter(toStore)
+            //ew use the callback function to avoid bugs with race conditions
+            setStored(prevVal => {
+                let toStore = newState instanceof Function ? newState(prevVal) : newState;
+                localStorage.setItem(key,JSON.stringify(toStore))
+                return toStore
+            })
         },
-        [key,setter],
+        [key,setStored],
     );
     return [stored,setValue]
 }
