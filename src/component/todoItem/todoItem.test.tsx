@@ -17,6 +17,7 @@ describe("TodoItem", () => {
 
     beforeEach(() => {
         todo = {
+            id:crypto.randomUUID(),
             title:"this is a title",
             description:"testeando todo",
             date: new Date(2022,11,19,4,50),
