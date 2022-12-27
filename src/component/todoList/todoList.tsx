@@ -44,7 +44,6 @@ export function TodoList(){
     return (
         <Flex direction="column" px={"sm"} gap={10} mt={10}>
             <SearchInput defaultValue={filterTitle} cb={newTitleFilter => setFilterTitle(newTitleFilter)}/>
-            {filterTitle}
             <Button.Group>
                 <Button
                     onClick={() => {
